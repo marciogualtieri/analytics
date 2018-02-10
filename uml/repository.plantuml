@@ -18,6 +18,10 @@ enum EventKind {
 
 class SlickEventRepository
 class CachedEventRepository
+class Clock {
+    +Timestamp now()
+    +Long currentHoursSinceEpoch()
+}
 
 EventRepository <|-- SlickEventRepository
 EventRepository <|-- CachedEventRepository
@@ -25,4 +29,5 @@ EventRepository <|-- CachedEventRepository
 EventRepository *-- Event
 EventRepository *-- EventKind
 Event *-- EventKind
+CachedEventRepository *-- Clock
 @enduml
