@@ -12,6 +12,7 @@
 - [Coverage Reports](#coverage-reports)
 - [Running the App](#running-the-app)
 - [Deployment](#deployment)
+- [Continuous Integration](#continuous-integration)
 - [Developer's Guide](#developers-guide)
   - [Creating an Empty App](#creating-an-empty-app)
   - [Adding Play-Slick Support](#adding-play-slick-support)
