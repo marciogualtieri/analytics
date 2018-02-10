@@ -17,6 +17,7 @@
   - [Adding Play-Slick Support](#adding-play-slick-support)
   - [Validating Form Data](#validating-form-data)
   - [Coverage Reports Configuration](#coverage-reports-configuration)
+  - [Adding a TOC to this Document](#adding-a-toc-to-this-document)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -306,3 +307,17 @@ Add the following line to your plugins.sbt:
     addSbtPlugin("com.github.sbt" % "sbt-jacoco" % "3.0.3")
 
 As per [this section in the documentation](https://www.scala-sbt.org/sbt-jacoco/getting-started.html#setting-minimum-coverage-levels), we could make jacoco fail if the coverage doesn't comply with some minimum standards. That would advisable when the project reaches a more mature state.
+
+### Adding a TOC to this Document
+
+For my own future reference, here's a nice way to add a TOC to a markdown file.
+
+Install [DocToc](https://github.com/thlorenz/doctoc):
+
+    npm install -g doctoc
+
+Run DocToc on the markdown file:
+
+    doctoc README.md
+
+Re-run the command to update the TOC with changes in the markdown file.
