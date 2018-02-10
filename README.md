@@ -262,6 +262,10 @@ Note the HTTP response with status 200 (OK) and the event statistics.
 
 TODO
 
+## Continuous Integration
+
+This project uses CircleCI for this purpose. You may see all builds [here](https://circleci.com/gh/marciogualtieri/analytics).
+
 ## Developer's Guide
 
 For my own reference, I'm recording the steps necessary to create the app from scratch.
