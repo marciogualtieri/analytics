@@ -41,7 +41,7 @@ jobs:
       # run tests!
       - run: cat /dev/null | sbt test:test
 
-      - run: mkdir ~/analysis/test-results
+      - run: mkdir -p ~/analysis/test-results
 
       - store_test_results:
           path: ~/analysis/test-results
