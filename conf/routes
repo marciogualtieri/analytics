@@ -1,0 +1,11 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+GET     /                           controllers.AnalyticsController.index
+POST    /analytics                  controllers.AnalyticsController.createEvent
+GET     /analytics                  controllers.AnalyticsController.eventCounts
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

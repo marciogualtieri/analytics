@@ -1,0 +1,23 @@
+@startuml
+class UpdateCache {
+    +UpdateCache(Seq<String> users, Int clicks, Int impressions, Long hoursSinceEpoch)
+}
+class GetCacheCounts
+class GetCacheHour
+class AddEventToCache {
+    +AddEventToCache(String user, EventKind kind)
+}
+
+class CachingActor {
+        -Set<String> users;
+        -Int clicks
+        -Int impressions
+        -Long hoursSinceEpoch
+        +PartialFunction<Any, Unit> receive()
+}
+
+CachingActor *-- UpdateCache
+CachingActor *-- GetCacheCounts
+CachingActor *-- GetCacheHour
+CachingActor *-- AddEventToCache
+@enduml

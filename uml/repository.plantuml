@@ -1,0 +1,28 @@
+@startuml
+interface EventRepository {
+        +Future<Event> create(string user, EventKind kind, Timestamp millisecondsSinceEpoch)
+        +Future<Seq<Event>> all()
+        +Future<Unit> deleteAll()
+        +Future<Tuple<Int, Int, Int>> counts(Long hoursSinceEpoch)
+        +Future<Seq<String>> distinctUsers(Long hoursSinceEpoch)
+}
+
+class Event {
+       +Event(Long id, String user, EventKind kind, Timestamp millisecondsSinceEpoch);
+}
+
+enum EventKind {
+        Click
+        Impression
+}
+
+class SlickEventRepository
+class CachedEventRepository
+
+EventRepository <|-- SlickEventRepository
+EventRepository <|-- CachedEventRepository
+
+EventRepository *-- Event
+EventRepository *-- EventKind
+Event *-- EventKind
+@enduml
