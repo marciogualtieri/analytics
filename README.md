@@ -1,5 +1,25 @@
 # Analytics
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Overview](#overview)
+- [Design](#design)
+  - [Database](#database)
+  - [Caching Service](#caching-service)
+- [Running Tests](#running-tests)
+- [Coverage Reports](#coverage-reports)
+- [Running the App](#running-the-app)
+- [Deployment](#deployment)
+- [Developer's Guide](#developers-guide)
+  - [Creating an Empty App](#creating-an-empty-app)
+  - [Adding Play-Slick Support](#adding-play-slick-support)
+  - [Validating Form Data](#validating-form-data)
+  - [Coverage Reports Configuration](#coverage-reports-configuration)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Overview
 
 The purpose of this project is to showcase my back-end development skills. Specifically on the technology side:
