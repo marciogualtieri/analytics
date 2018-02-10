@@ -23,11 +23,36 @@ class Clock {
     +Long currentHoursSinceEpoch()
 }
 
+class CachingActor {
+        -Set<String> users;
+        -Int clicks
+        -Int impressions
+        -Long hoursSinceEpoch
+        +PartialFunction<Any, Unit> receive()
+}
+
+class UpdateCache {
+    +UpdateCache(Seq<String> users, Int clicks, Int impressions, Long hoursSinceEpoch)
+}
+class GetCacheCounts
+class GetCacheHour
+class AddEventToCache {
+    +AddEventToCache(String user, EventKind kind)
+}
+
 EventRepository <|-- SlickEventRepository
 EventRepository <|-- CachedEventRepository
 
 EventRepository *-- Event
 EventRepository *-- EventKind
+
 Event *-- EventKind
+
 CachedEventRepository *-- Clock
+CachedEventRepository *-- CachingActor
+
+CachingActor *-- UpdateCache
+CachingActor *-- GetCacheCounts
+CachingActor *-- GetCacheHour
+CachingActor *-- AddEventToCache
 @enduml
