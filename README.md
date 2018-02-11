@@ -78,7 +78,7 @@ Also according with the requirements, over 90% of the requests have timestamps t
 
 ## Design
 
-For my own future reference, syntax for Plan UML diagrams can be found [here](http://plantuml.com/class-diagram).
+For my own future reference, syntax for Plant UML diagrams can be found [here](http://plantuml.com/class-diagram).
 
 ### Data Repository
 
