@@ -104,21 +104,21 @@ As a matter of fact, I developed `SlickEventRepository` first, wrote all functio
 
 As discussed earlier, `CachedEventRepository` was added last to the project as an enhancement. Note that the functional tests for the end-point are agnostic regarding the data repository, they should behave the same, independently of the data repository used.
 
-The fact that one can't really check if the caching service is working by inspecting the end-point (the only visible thing would be a difference in performance for cached and non-cached requests) is the reason I'm using mocks to test it. Specifically [mokito](http://site.mockito.org/).
+The fact that one can't really check if the caching service is working by inspecting the end-point (only a difference in performance for cached and non-cached requests would be noticeable) is the reason I'm using mocks to test it, specifically [mokito](http://site.mockito.org/).
 
-As a rule of thumb, I avoid the use of mocks in tests so they don't become coupled to the production code and brittle. For more details on this, refer to [this talk](https://vimeo.com/68375232) from Ian Cooper.
+As a rule of thumb, I try to avoid the use of mocks in tests so they don't become coupled to production code and brittle. For more details on this, refer to [this talk](https://vimeo.com/68375232) from Ian Cooper.
 
-In this particular case, the use of mocks is fully justified though: Using mocks we can be sure that the caching service is using cached data or fetching data from the repository depending on the current timestamp and timestamp of the request.
+In this particular case, the use of mocks is fully justified though: By using mocks we can be sure that the caching service is using cached data or fetching data from the repository depending on the current timestamp and timestamp of the request.
 
 Note also that I have defined an object for retrieving the current timestamp: `Clock`. This decoupling allows us to mock the current timestamp and thus simulate some of the scenarios for the caching service (particularly when an particular hour in the day is over and the current cached statistics expires).
 
 Given that the cached data is shared across different threads for different requests, you might have notice that we need to deal with concurrency.
 
-That's the reason I'm using AKKA, having defined the following actors and messages:
+That's the reason why I'm using AKKA, having defined the following actor and messages:
 
 ![Caching Service Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/marciogualtieri/analytics/master/uml/caching_actor.plantuml)
 
-The message object's names describe what they are meant for. These messages are sent to the actor to update the cache and read the event statistics from the cache as required.
+The message's names fully describe their purpose. These messages are sent to the actor to modify the cache and read the cached data as required.
 
 ## Running Tests
 
