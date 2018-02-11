@@ -16,7 +16,7 @@
   - [Building the App](#building-the-app)
   - [Testing the Build](#testing-the-build)
   - [Changing the Database Configuration](#changing-the-database-configuration)
-  - [Deploying to Amazon AWS](#deploying-to-amazon-aws)
+  - [Amazon AWS](#amazon-aws)
     - [Installing Terraform](#installing-terraform)
     - [Deploying to AWS](#deploying-to-aws)
     - [Un-deploying from AWS](#un-deploying-from-aws)
@@ -323,9 +323,9 @@ You would also need to add the database's library dependency to `build.sbt`:
 
     libraryDependencies += "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
 
-### Deployment to Amazon AWS
+### Amazon AWS
 
-We will be using [Terraform](https://www.terraform.io) for this purpose.
+We will be using [Terraform](https://www.terraform.io) to deploy our application to [Amazon AWS](https://aws.amazon.com/).
 
 #### Installing Terraform
 
