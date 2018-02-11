@@ -10,6 +10,7 @@
   - [Caching Service](#caching-service)
 - [Running Tests](#running-tests)
 - [Coverage Reports](#coverage-reports)
+- [Continuous Integration](#continuous-integration)
 - [Running the App](#running-the-app)
 - [Deployment](#deployment)
   - [Building the App](#building-the-app)
@@ -20,7 +21,6 @@
     - [Deploying to AWS](#deploying-to-aws)
     - [Un-deploying from AWS](#un-deploying-from-aws)
     - [Testing the Deployment](#testing-the-deployment)
-- [Continuous Integration](#continuous-integration)
 - [Developer's Guide](#developers-guide)
   - [Creating an Empty App](#creating-an-empty-app)
   - [Adding Play-Slick Support](#adding-play-slick-support)
@@ -186,6 +186,10 @@ HTML reports will be available at the folder `target/scala-2.12/jacoco/report/ht
 The coverage isn't 100% because of two reasons: case classes (doesn't make sense to write tests for them) and generated code (from the Play Framework).
 
 If you look at the HTML reports more carefully, you will notice that the relevant code is being fully covered.
+
+## Continuous Integration
+
+This project uses [CircleCI](https://circleci.com) for this purpose. You may see all builds [here](https://circleci.com/gh/marciogualtieri/analytics).
 
 ## Running the App
 
@@ -372,10 +376,6 @@ If you are deploying a new instance, you have to change the commands to reflect 
 **Retrieving Statistics:**
 
     curl -v http://ec2-34-244-147-122.eu-west-1.compute.amazonaws.com:9000/analytics?timestamp=1445455680000
-
-## Continuous Integration
-
-This project uses [CircleCI](https://circleci.com) for this purpose. You may see all builds [here](https://circleci.com/gh/marciogualtieri/analytics).
 
 ## Developer's Guide
 
