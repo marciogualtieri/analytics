@@ -11,4 +11,7 @@ target
 gradle
 gradlew
 documents
+terraform/.terraform
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
 
