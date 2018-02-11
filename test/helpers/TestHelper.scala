@@ -23,6 +23,17 @@ trait TestHelper {
     ("event", EventKind.Click.toString),
     ("timestamp", TestMillisecondsSinceEpoch.getTime.toString))
 
+  val MissingTimestampBodyParameters: Seq[(String, String)] = Seq(("user", MoeTestUser),
+    ("event", EventKind.Click.toString))
+
+  val EmptyValueBodyParameters: Seq[(String, String)] = Seq(("user", ""),
+    ("event", EventKind.Click.toString),
+    ("timestamp", TestMillisecondsSinceEpoch.getTime.toString))
+
+  val InvalidEventBodyParameters: Seq[(String, String)] = Seq(("user", MoeTestUser),
+    ("event", "shout"),
+    ("timestamp", TestMillisecondsSinceEpoch.getTime.toString))
+
   val CurlyTestUser: String = "curly.howard"
   val LarryTestUser: String = "larry.fine"
   val ShempTestUser: String = "shemp.howard"

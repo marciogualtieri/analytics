@@ -32,8 +32,27 @@ class AnalyticsControllerSpec extends PlaySpec with GuiceOneAppPerTest with Befo
       persistedEvents mustBe Seq(Event(1, MoeTestUser, EventKind.Click, TestMillisecondsSinceEpoch))
     }
 
-    "validate request form parameters" in {
+    "fail request with form parameter missing value" in {
       val request = FakeRequest(POST, controllers.routes.AnalyticsController.createEvent().url)
+        .withFormUrlEncodedBody(MissingTimestampBodyParameters: _*)
+        .withHeaders(TestPostHeaders: _*)
+
+      val response = route(app, request).get
+      status(response) mustBe BAD_REQUEST
+    }
+
+    "fail request with form parameter with empty value" in {
+      val request = FakeRequest(POST, controllers.routes.AnalyticsController.createEvent().url)
+        .withFormUrlEncodedBody(EmptyValueBodyParameters: _*)
+        .withHeaders(TestPostHeaders: _*)
+
+      val response = route(app, request).get
+      status(response) mustBe BAD_REQUEST
+    }
+
+    "fail request with invalid event form parameter" in {
+      val request = FakeRequest(POST, controllers.routes.AnalyticsController.createEvent().url)
+        .withFormUrlEncodedBody(InvalidEventBodyParameters: _*)
         .withHeaders(TestPostHeaders: _*)
 
       val response = route(app, request).get
