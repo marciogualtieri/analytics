@@ -57,7 +57,7 @@ class SlickEventRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(i
       allEvents.delete
   }
 
-  def counts(hoursSinceEpoch: Long): Future[(Int, Int, Int)] = db.run {
+  override def counts(hoursSinceEpoch: Long): Future[(Int, Int, Int)] = db.run {
     val events = allEvents.filter { e => e.hoursSinceEpoch === hoursSinceEpoch }
     val distinctUsers = events.map { e => e.user }.distinct.length
     val clicks = events.filter { e => e.kind === EventKind.Click }.length
@@ -66,7 +66,7 @@ class SlickEventRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(i
     counts.result.head
   }
 
-  def distinctUsers(hoursSinceEpoch: Long): Future[Seq[String]] = db.run {
+  override def distinctUsers(hoursSinceEpoch: Long): Future[Seq[String]] = db.run {
     val events = allEvents.filter { e => e.hoursSinceEpoch === hoursSinceEpoch }
     val users = events.map { e => e.user }.distinct
     users.result
