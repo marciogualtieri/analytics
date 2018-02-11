@@ -42,5 +42,5 @@ jobs:
       - run: cat /dev/null | sbt test:test
 
       - store_test_results:
-          path: ~/target/test-reports
+          path: ~/repo/target/test-reports
 
