@@ -313,13 +313,13 @@ At the moment the application uses [H2](http://www.h2database.com/html/main.html
     slick.dbs.default.db.driver="org.h2.Driver"
     slick.dbs.default.db.url="jdbc:h2:mem:play"
 
-You may change it by adding the proper configuration to `application.conf`:
+You may change it by adding the proper configuration to `application.conf`. As an example, here's the configuration for [PostgreSQL](https://www.postgresql.org/):
 
     slick.dbs.default.profile="slick.jdbc.PostgresProfile$"
     slick.dbs.default.db.driver="org.postgresql.Driver"
     slick.dbs.default.db.url=${JDBC_DATABASE_URL}
 
-You would also need to add the library dependency to `build.sbt`:
+You would also need to add the database's library dependency to `build.sbt`:
 
     libraryDependencies += "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
 
