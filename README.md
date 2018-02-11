@@ -2,16 +2,24 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+**Table of Contents**
 
 - [Overview](#overview)
 - [Design](#design)
-  - [Database](#database)
+  - [Data Repository](#data-repository)
   - [Caching Service](#caching-service)
 - [Running Tests](#running-tests)
 - [Coverage Reports](#coverage-reports)
 - [Running the App](#running-the-app)
 - [Deployment](#deployment)
+  - [Building the App](#building-the-app)
+  - [Testing the Build](#testing-the-build)
+  - [Changing the Database Configuration](#changing-the-database-configuration)
+  - [Deploying to Amazon AWS](#deploying-to-amazon-aws)
+    - [Installing Terraform](#installing-terraform)
+    - [Deploying to AWS](#deploying-to-aws)
+    - [Un-deploying from AWS](#un-deploying-from-aws)
+    - [Testing the Deployment](#testing-the-deployment)
 - [Continuous Integration](#continuous-integration)
 - [Developer's Guide](#developers-guide)
   - [Creating an Empty App](#creating-an-empty-app)
@@ -37,7 +45,7 @@ On the processes side, this project also showcases my ability of developing a [M
 * Following the [test-driven development process](https://en.wikipedia.org/wiki/Test-driven_development).
 * Reporting code test coverage with [JaCoCo](http://www.eclemma.org/jacoco/).
 * Following [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) with [CircleCI](https://circleci.com/).
-* Deployment to [Amazon AWS](https://aws.amazon.com/) using [terraform](https://www.terraform.io/).
+* Deployment to [Amazon AWS](https://aws.amazon.com/) with [terraform](https://www.terraform.io/).
 
 
 The REST service is comprised of a single `/analytics` end-point which supports following two methods:
@@ -52,7 +60,7 @@ Persists analytics data into the data repository and supports the following form
 
 According with the requirements, we should "track the event in our data store", which, in my understanding, translates to: the event should be fully saved to the data store. If we simply update the statistics for each event, we wouldn't be truly tracking the events, given that the timestamp of each individual event would be lost.
 
-The specification appear to suggest that the parameters in the POST call were query parameters, but given that the usual is using url-encoded form parameters in the body of the request, that's what I have opted for.
+The specification appear to suggest that the parameters in the POST call were query parameters, but given that the usual is passing url-encoded form parameters in the body for a POST request, that's what I have opted for. This choice is open to discussion during the reviewing process.
 
 **GET**
 
@@ -60,7 +68,7 @@ Retrieves event statistics for the hour of the provided timestamp. Supports a si
 
 * timestamp: in milliseconds since epoch.
 
-This request should return the following statistics:
+This request should return the following statistics as plain text:
 
     unique_users,<unique usernames count>
     clicks,<click count>
@@ -70,11 +78,11 @@ Also according with the requirements, over 90% of the requests have timestamps t
 
 ## Design
 
-For my own future reference, syntax for Plan UML diagrams can be found [here](http://plantuml.com/class-diagram) and an online renderer [here](http://www.plantuml.com/plantuml/uml/).
+For my own future reference, syntax for Plan UML diagrams can be found [here](http://plantuml.com/class-diagram).
 
-### Database
+### Data Repository
 
-The Play Framework follows the [MVC pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller), so this framework has a well defined way to define the views and controllers, as well as the models:
+The Play Framework follows the [MVC pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller), so this framework has a well defined way to create views, models and controllers. Most of the design goes into the model, given that the view and controller are very standard. Let's take a look at the model:
 
 ![Data Repository Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/marciogualtieri/analytics/master/uml/data_repository.plantuml)
 
@@ -96,11 +104,11 @@ As a matter of fact, I developed `SlickEventRepository` first, wrote all functio
 
 As discussed earlier, `CachedEventRepository` was added last to the project as an enhancement. Note that the functional tests for the end-point are agnostic regarding the data repository, they should behave the same, independently of the data repository used.
 
-The fact that one can't really test if the caching service is working by inspecting the end-point (the only visible thing would be a difference in performance for a cached and non-cached request) is the reason I'm using mocks to test it. Specifically [mokito](http://site.mockito.org/).
+The fact that one can't really check if the caching service is working by inspecting the end-point (the only visible thing would be a difference in performance for cached and non-cached requests) is the reason I'm using mocks to test it. Specifically [mokito](http://site.mockito.org/).
 
 As a rule of thumb, I avoid the use of mocks in tests so they don't become coupled to the production code and brittle. For more details on this, refer to [this talk](https://vimeo.com/68375232) from Ian Cooper.
 
-In this particular case, the use of mocks is fully justified though: Using mocks we can be sure the caching service is using cached data or fetching data from the repository depending on the current timestamp and timestamp of the request.
+In this particular case, the use of mocks is fully justified though: Using mocks we can be sure that the caching service is using cached data or fetching data from the repository depending on the current timestamp and timestamp of the request.
 
 Note also that I have defined an object for retrieving the current timestamp: `Clock`. This decoupling allows us to mock the current timestamp and thus simulate some of the scenarios for the caching service (particularly when an particular hour in the day is over and the current cached statistics expires).
 
@@ -173,9 +181,15 @@ You should get an output similar to the following:
     [info]
     [info] Check /home/gualtief/workspace/analytics/target/scala-2.12/jacoco/report for detailed report
 
+HTML reports will be available at the folder `target/scala-2.12/jacoco/report/html/` after running Jacoco.
+
+The coverage isn't 100% because of two reasons: case classes (doesn't make sense to write tests for them) and generated code (from the Play Framework).
+
+If you look at the HTML reports more carefully, you will notice that the relevant code is being fully covered.
+
 ## Running the App
 
-To run the app, execute the following command:
+To run the app in development mode, execute the following command:
 
     sbt run
 
@@ -192,9 +206,7 @@ You should get an output similar to the following:
 
     (Server started, use Enter to stop and go back to the console...)
 
-Which means that the service is up and running in development mode.
-
-You may now send requests to the end point using [cURL](https://curl.haxx.se/) or your preferred tool:
+Which means that the service is up and running. You may now send requests to the end point using [cURL](https://curl.haxx.se/) or your preferred tool:
 
 **Persisting an event:**
 
@@ -261,11 +273,109 @@ Note the HTTP response with status 200 (OK) and the event statistics.
 
 ## Deployment
 
-TODO
+### Building the App
+
+Execute the following command builds a binary version of your application that you can deploy to a server:
+
+    sbt universal:packageZipTarball
+
+You should get a `*.tar.gz` file named `./target/universal/analytics-${VERSION}.tar.gz`.
+
+### Testing the Build
+
+To unpack it:
+
+    tar -xvzf analytics-${VERSION}.tar.gz
+
+You will need an application secret, which you may generate by running the following command:
+
+    export APPLICATION_SECRET=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+
+To start the server, execute the startup scrip `./bin/analytics` as following:
+
+    ./analytics-${VERSION}/bin/analytics -Dplay.http.secret.key=${APPLICATION_SECRET} -Dplay.evolutions.autoApply=true
+
+These are only general instructions about how to start the service in any server. We will be deploying to AWS using terraform in the section that follows.
+
+Another way to check if the application can be started in production mode is:
+
+    sbt runProd
+
+### Changing the Database Configuration
+
+At the moment the application uses [H2](http://www.h2database.com/html/main.html) as the database:
+
+    slick.dbs.default.profile="slick.jdbc.H2Profile$"
+    slick.dbs.default.db.driver="org.h2.Driver"
+    slick.dbs.default.db.url="jdbc:h2:mem:play"
+
+You may change it by adding the proper configuration to `application.conf`:
+
+    slick.dbs.default.profile="slick.jdbc.PostgresProfile$"
+    slick.dbs.default.db.driver="org.postgresql.Driver"
+    slick.dbs.default.db.url=${JDBC_DATABASE_URL}
+
+You would also need to add the library dependency to `build.sbt`:
+
+    libraryDependencies += "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
+
+### Deploying to Amazon AWS
+
+We will be using [Terraform](https://www.terraform.io) for this purpose.
+
+#### Installing Terraform
+
+To install it follow [these instructions](https://www.terraform.io/intro/getting-started/install.html).
+
+Once installed, execute the following command to install its plugins:
+
+    terraform init
+
+#### Deploying to AWS
+
+Export the application's version (change it accordingly depending on the current version):
+
+    export APPLICATION_VERSION=1.0-SNAPSHOT
+
+The following command will generate a random application secret, but you may define your own:
+
+    export APPLICATION_SECRET=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+
+You also will need an Amazon AWS key pair. The terraform configuration uses a key pair named `analysis`.
+
+You may create your own key pair named `analysis` or change `./terraform/main.tf` to reflect your own key pair.
+
+Once you have the key pair, you will need import it to your local machine using the AWS console. In the examples bellow, the imported key pair is named `/home/gualtief/tmp/analytics.pem`.
+
+From the terraform folder, execute the following command:
+
+     terraform apply -var "APPLICATION_SECRET=${APPLICATION_SECRET}" -var "PRIVATE_KEY_FILE=/home/gualtief/tmp/analytics.pem"
+
+#### Un-deploying from AWS
+
+To delete the deployment, execute the following command:
+
+    terraform destroy -var "APPLICATION_SECRET=${APPLICATION_SECRET}" -var "PRIVATE_KEY_FILE=/home/gualtief/tmp/analytics.pem"
+
+#### Testing the Deployment
+
+I have already deployed the application to AWS and it can be found [here](http://ec2-34-244-147-122.eu-west-1.compute.amazonaws.com:9000/).
+
+If you are deploying a new instance, you have to change the commands to reflect your own server's URL.
+
+**Persisting an Event:**
+
+    curl -v -H "Content-Type: application/x-www-form-urlencoded" \
+    -d 'user=rick.sanchez&event=click&timestamp=1445455680000' \
+     http://ec2-34-244-147-122.eu-west-1.compute.amazonaws.com:9000/analytics
+
+**Retrieving Statistics:**
+
+    curl -v http://ec2-34-244-147-122.eu-west-1.compute.amazonaws.com:9000/analytics?timestamp=1445455680000
 
 ## Continuous Integration
 
-This project uses CircleCI for this purpose. You may see all builds [here](https://circleci.com/gh/marciogualtieri/analytics).
+This project uses [CircleCI](https://circleci.com) for this purpose. You may see all builds [here](https://circleci.com/gh/marciogualtieri/analytics).
 
 ## Developer's Guide
 
