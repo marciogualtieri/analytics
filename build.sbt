@@ -17,7 +17,3 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-slick-evolutions" % "3.0.3",
   "com.h2database" % "h2" % "1.4.196"
 )
-
-dependencyOverrides += "com.google.guava" % "guava" % "22.0"
-dependencyOverrides += "com.typesafe.akka" %% "akka-stream" % "2.5.8"
-dependencyOverrides += "com.typesafe.akka" %% "akka-actor" % "2.5.8"
