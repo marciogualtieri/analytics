@@ -323,7 +323,7 @@ You would also need to add the database's library dependency to `build.sbt`:
 
     libraryDependencies += "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
 
-### Deploying to Amazon AWS
+### Deployment to Amazon AWS
 
 We will be using [Terraform](https://www.terraform.io) for this purpose.
 
