@@ -132,8 +132,6 @@ You should get an output similar to the following:
     [info] Loading project definition from /home/gualtief/workspace/Narrative/analytics/project
     [info] Loading settings from build.sbt ...
     [info] Set current project to analytics (in build file:/home/gualtief/workspace/Narrative/analytics/)
-    [info] Compiling 1 Scala source to /home/gualtief/workspace/Narrative/analytics/target/scala-2.12/test-classes ...
-    [info] Done compiling.
     [info] Instrumenting 41 classes to /home/gualtief/workspace/Narrative/analytics/target/scala-2.12/jacoco/instrumented-classes
     [info] IntegrationSpec:
     [info] Application
@@ -141,7 +139,9 @@ You should get an output similar to the following:
     [info] AnalyticsControllerSpec:
     [info] AnalyticsController POST
     [info] - should persist an event into the repository
-    [info] - should validate request form parameters
+    [info] - should fail request with form parameter missing value
+    [info] - should fail request with form parameter with empty value
+    [info] - should fail request with invalid event form parameter
     [info] AnalyticsController GET
     [info] - should retrieve event counts from repository for the hour
     [info] CachedEventRepositorySpec:
@@ -152,13 +152,13 @@ You should get an output similar to the following:
     [info] - should update cached data with new events
     [info] - should reload cached data when clock advances to next hour
     [info] ScalaTest
-    [info] Run completed in 15 seconds, 490 milliseconds.
-    [info] Total number of tests run: 9
+    [info] Run completed in 16 seconds, 49 milliseconds.
+    [info] Total number of tests run: 11
     [info] Suites: completed 3, aborted 0
-    [info] Tests: succeeded 9, failed 0, canceled 0, ignored 0, pending 0
+    [info] Tests: succeeded 11, failed 0, canceled 0, ignored 0, pending 0
     [info] All tests passed.
-    [info] Passed: Total 9, Failed 0, Errors 0, Passed 9
-    [success] Total time: 30 s, completed 10-Feb-2018 17:34:26
+    [info] Passed: Total 11, Failed 0, Errors 0, Passed 11
+    [success] Total time: 20 s, completed 12-Feb-2018 08:58:12
 
 ## Coverage Reports
 
