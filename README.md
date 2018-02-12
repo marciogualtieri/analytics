@@ -152,7 +152,7 @@ You should get an output similar to the following:
     [info] - should update cached data with new events
     [info] - should reload cached data when clock advances to next hour
     [info] ScalaTest
-    [info] Run completed in 16 seconds, 49 milliseconds.
+    [info] Run completed in 16 seconds, 49 micurl -v http://ec2-34-244-147-122.eu-west-1.compute.amazonaws.com:9000/analytics?timestamp=1445455680000lliseconds.
     [info] Total number of tests run: 11
     [info] Suites: completed 3, aborted 0
     [info] Tests: succeeded 11, failed 0, canceled 0, ignored 0, pending 0
@@ -390,14 +390,6 @@ Execute the following command from the terminal:
     sbt new playframework/play-scala-seed.g8
 
 Follow the instructions on the screen. As a rule of thumb, you only need to change the project's name. The default settings will do just fine.
-
-The empty project might show some eviction warnings. Follow [these instructions](https://www.scala-sbt.org/1.0/docs/Library-Management.html#Eviction+warning) to remove them.
-
-Particularly for this version, the following overrides are required:
-
-    dependencyOverrides += "com.google.guava" % "guava" % "22.0"
-    dependencyOverrides += "com.typesafe.akka" %% "akka-stream" % "2.5.8"
-    dependencyOverrides += "com.typesafe.akka" %% "akka-actor" % "2.5.8"
 
 ### Adding Play-Slick Support
 
