@@ -44,8 +44,8 @@ On the processes side, this project also showcases my ability of developing a [M
 * Following the [open/close principle](https://en.wikipedia.org/wiki/Open/closed_principle).
 * Following the [test-driven development process](https://en.wikipedia.org/wiki/Test-driven_development).
 * Reporting test coverage with [Jacoco](http://www.eclemma.org/jacoco/).
-* Following [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) with [CircleCI](https://circleci.com/).
-* Deploying to [Amazon AWS](https://aws.amazon.com/) with [terraform](https://www.terraform.io/).
+* Following [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) using [CircleCI](https://circleci.com/).
+* Creating a deploy-able build (to [Amazon AWS](https://aws.amazon.com/) using [terraform](https://www.terraform.io/)) for quick and constant feedback from the end-user.
 
 
 The REST service is comprised of a single `/analytics` end-point which supports following two methods:
