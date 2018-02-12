@@ -69,7 +69,7 @@ class AnalyticsControllerSpec extends PlaySpec with GuiceOneAppPerTest with Befo
 
       val response = route(app, request).get
       status(response) mustBe OK
-      contentAsString(response) mustBe ExpectedCounts
+      contentAsString(response) mustBe ExpectedCountsForTestEvents
     }
   }
 }

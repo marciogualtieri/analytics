@@ -48,7 +48,7 @@ trait TestHelper {
 
   val TestPostHeaders = Seq(("Content-type", "application/x-www-form-urlencoded"))
 
-  val ExpectedCounts: String =
+  val ExpectedCountsForTestEvents: String =
     s"""
        |unique_users,3
        |clicks,2
