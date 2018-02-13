@@ -162,7 +162,7 @@ You should get an output similar to the following:
 
 ## Coverage Reports
 
-I'm using the [sbt-jacoco plugin](https://www.scala-sbt.org/sbt-jacoco/) to generate coverage reports.
+I'm using the [sbt-jacoco](https://www.scala-sbt.org/sbt-jacoco/) plugin to generate coverage reports.
 
 To generate the reports, execute the following command:
 
