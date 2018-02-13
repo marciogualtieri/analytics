@@ -415,6 +415,18 @@ Add the following line to your plugins.sbt:
 
 As per [this section in the documentation](https://www.scala-sbt.org/sbt-jacoco/getting-started.html#setting-minimum-coverage-levels), we could make jacoco fail if the coverage doesn't comply with some minimum standards. That would advisable when the project reaches a more mature state.
 
+### GitHub Camo
+
+If you have any generate images in your markdown files on GitHub (such as from [Plant UML server](http://plantuml.com/server), for instance), you might have problems updating diagrams.
+
+GitHub aggressively caches images using a service of its own named [Camo](https://help.github.com/articles/about-anonymized-image-urls/).
+
+The solution for this issue is deleting the image from Camo's cache:
+
+    curl -X PURGE <cached image URL>
+
+You can get the URL by right-clicking the image on your GitHub's markdown page.
+
 ### Adding a TOC to this Document
 
 For my own future reference, here's a nice way to add a TOC to a markdown file.
