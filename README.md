@@ -26,7 +26,7 @@
   - [Adding Play-Slick Support](#adding-play-slick-support)
   - [Validating Form Data](#validating-form-data)
   - [Coverage Reports Configuration](#coverage-reports-configuration)
-  - [GitHub Camo](#github-camo)
+  - [GitHub Image Caching](#github-image-caching)
   - [Adding a TOC to this Document](#adding-a-toc-to-this-document)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -416,9 +416,9 @@ Add the following line to your plugins.sbt:
 
 As per [this section in the documentation](https://www.scala-sbt.org/sbt-jacoco/getting-started.html#setting-minimum-coverage-levels), we could make jacoco fail if the coverage doesn't comply with some minimum standards. That would advisable when the project reaches a more mature state.
 
-### GitHub Camo
+### GitHub Image Caching
 
-If you have any generate images in your markdown files on GitHub (such as from [Plant UML server](http://plantuml.com/server), for instance), you might have problems updating diagrams.
+If you have any generated images in your markdown files on GitHub (such as from [Plant UML server](http://plantuml.com/server), for instance), you might have problems updating them.
 
 GitHub aggressively caches images using a service of its own named [Camo](https://help.github.com/articles/about-anonymized-image-urls/).
 
