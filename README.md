@@ -416,11 +416,11 @@ Add the following line to your plugins.sbt:
 
 As per [this section in the documentation](https://www.scala-sbt.org/sbt-jacoco/getting-started.html#setting-minimum-coverage-levels), we could make jacoco fail if the coverage doesn't comply with some minimum standards. That would advisable when the project reaches a more mature state.
 
-### GitHub Image Caching
+### GitHub's Image Caching
 
 If you have any generated images in your markdown files on GitHub (such as from [Plant UML server](http://plantuml.com/server), for instance), you might have problems updating them.
 
-GitHub aggressively caches images using a service of its own named [Camo](https://help.github.com/articles/about-anonymized-image-urls/).
+GitHub [aggressively caches images](https://help.github.com/articles/about-anonymized-image-urls/) using a service of its own named "Camo".
 
 The solution for this issue is deleting the image from Camo's cache:
 
