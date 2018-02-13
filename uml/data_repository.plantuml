@@ -50,7 +50,7 @@ Event *-- EventKind
 
 CachedEventRepository *-- Clock
 CachedEventRepository *-- CachingActor
-
+CachedEventRepository *-- EventRepository
 CachingActor *-- UpdateCache
 CachingActor *-- GetCacheCounts
 CachingActor *-- GetCacheHour
