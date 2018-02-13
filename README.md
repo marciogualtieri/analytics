@@ -26,7 +26,7 @@
   - [Adding Play-Slick Support](#adding-play-slick-support)
   - [Validating Form Data](#validating-form-data)
   - [Coverage Reports Configuration](#coverage-reports-configuration)
-  - [GitHub Image Caching](#github-image-caching)
+  - [GitHub's Image Caching](#githubs-image-caching)
   - [Adding a TOC to this Document](#adding-a-toc-to-this-document)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
