@@ -85,7 +85,7 @@ For my own future reference, syntax for Plant UML diagrams can be found [here](h
 
 The Play Framework follows the [MVC pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller), so this framework has a well defined way to create views, models and controllers. Most of the design goes into the model, given that the view and controller are very standard. Let's take a look at the model:
 
-![Data Repository Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/marciogualtieri/analytics/master/uml/data_repository.plantuml)
+![Data Repository Class Diagram](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marciogualtieri/analytics/master/uml/data_repository.plantuml)
 
 First of all, note the `Future` objects: All the data store operations are non-blocking/asynchronous operations.
 
@@ -117,7 +117,7 @@ Given that the cached data is shared across different threads for different requ
 
 That's the reason why I'm using AKKA, having defined the following actor and messages:
 
-![Caching Service Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/marciogualtieri/analytics/master/uml/caching_actor.plantuml)
+![Caching Service Class Diagram](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marciogualtieri/analytics/master/uml/caching_actor.plantuml)
 
 The message's names fully describe their purpose. These messages are sent to the actor to modify the cache and read the cached data as required.
 
