@@ -89,13 +89,13 @@ The Play Framework follows the [MVC pattern](https://en.wikipedia.org/wiki/Model
 
 First of all, note the `Future` objects: All the data store operations are non-blocking/asynchronous operations.
 
-Also note I have defined an interface (actually a `trait` in Scala), so the application complies with open/close principles: By creating an abstraction for the `EventRepository`, we don't have to commit to a particular implementation. The application can be easily changed to support a different data repository (or ORM) without changing neither the caching service nor the controllers that depend on it (only `AnalyticsController` at the moment).
+Also note that I have defined an interface (actually a `trait` in Scala), so the application complies with open/close principles: By creating an abstraction for the `EventRepository`, we don't have to commit to a particular implementation. The application can be easily changed to support a different data repository (or ORM) without changing neither the caching service nor the controllers that depend on it (only `AnalyticsController` at the moment).
 
 `SlickEventRepository` (a data repository implementation that uses Play-Slick) is an actual implementation.
 
 For more details on this architecture choice, refer to [this article](http://blog.cleancoder.com/uncle-bob/2016/01/04/ALittleArchitecture.html) from [Robert C. Martin](https://en.wikipedia.org/wiki/Robert_C._Martin).
 
-Note also that `CachedEventRepository` also implements the same interface, just like any other concrete data repository would.
+Note also that `CachedEventRepository` also implements the same interface, just like any other concrete data repository would have to.
 
 Because of this architecture, either `CachedEventRepository` or `SlickEventRepository` can be used by the controller as the data repository.
 
@@ -103,7 +103,7 @@ As a matter of fact, I developed `SlickEventRepository` first, wrote all functio
 
 ### Caching Service
 
-As discussed earlier, `CachedEventRepository` was added last to the project as an enhancement. Note that the functional tests for the end-point are agnostic regarding the data repository, they should behave the same, independently of the data repository used.
+As discussed earlier, `CachedEventRepository` was added last to the project as an enhancement. Note that the functional tests for the end-point are agnostic regarding the data repository, they should behave just the same independently of the data repository used.
 
 The fact that one can't really check if the caching service is working by inspecting the end-point (only a difference in performance for cached and non-cached requests would be noticeable) is the reason I'm using mocks to test it, specifically [mokito](http://site.mockito.org/).
 
@@ -111,15 +111,15 @@ As a rule of thumb, I try to avoid the use of mocks in tests so they don't becom
 
 In this particular case, the use of mocks is fully justified though: By using mocks we can be sure that the caching service is using cached data or fetching data from the repository depending on the current timestamp and timestamp of the request.
 
-Note also that I have defined an object for retrieving the current timestamp: `Clock`. This decoupling allows us to mock the current timestamp and thus simulate some of the scenarios for the caching service (particularly when an particular hour in the day is over and the current cached statistics expires).
+Note also that I have defined an object for retrieving the current timestamp: `Clock`. This decoupling allows us to mock the current timestamp and thus simulate some of the scenarios for the caching service (particularly when a particular hour in the day is over and the current cached statistics expires).
 
-Given that the cached data is shared across different threads for different requests, you might have notice that we need to deal with concurrency.
+Given that the cached data is shared across multiple threads across different requests, you might have notice that we need to deal with concurrency.
 
 That's the reason why I'm using AKKA, having defined the following actor and messages:
 
 ![Caching Service Class Diagram](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/marciogualtieri/analytics/master/uml/caching_actor.plantuml)
 
-The message's names fully describe their purpose. These messages are sent to the actor to modify the cache and read the cached data as required.
+The messages names fully describe their purpose. These messages are sent to the actor to modify the cache and read the cached data as required.
 
 ## Running Tests
 
